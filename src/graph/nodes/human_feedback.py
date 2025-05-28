@@ -16,6 +16,7 @@ def human_feedback_node(
     auto_accepted_plan = state.get("auto_accepted_plan", False)
     if not auto_accepted_plan:
         feedback = interrupt("Please Review the Plan.")
+        # feedback = input("Please Review the Plan (Enter [ACCEPTED], [EDIT_PLAN] followed by your feedback, or other): ")
 
         # if the feedback is not accepted, return the planner node
         if feedback and str(feedback).upper().startswith("[EDIT_PLAN]"):

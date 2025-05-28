@@ -110,7 +110,6 @@ async def _execute_agent_step(
     )
     
     
-
 async def _setup_and_execute_agent_step(
     state: State,
     config: RunnableConfig,
@@ -136,7 +135,6 @@ async def _setup_and_execute_agent_step(
     configurable = Configuration.from_runnable_config(config)
     mcp_servers = {}
     enabled_tools = {}
-
     # Extract MCP server configuration for this agent type
     if configurable.mcp_settings:
         for server_name, server_config in configurable.mcp_settings["servers"].items():
