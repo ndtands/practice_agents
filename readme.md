@@ -53,6 +53,53 @@ audio_file = "generated_audio.wav"
 Audio(audio_file)
 ```
 
+## Speech to Text
+```
+import requests
+
+# URL of the FastAPI server
+url = "http://localhost:8001/transcribe/"
+
+# Path to a sample audio file (replace with your own WAV or FLAC file)
+audio_file_path = "generated_audio.wav"
+
+# Test with text output
+with open(audio_file_path, "rb") as audio_file:
+    files = {"file": (audio_file_path, audio_file, "audio/wav")}
+    response = requests.post(url, files=files, params={"output_format": "text"})
+
+if response.status_code == 200:
+    print("Text Response:", response.json())
+else:
+    print("Error:", response.json())
+
+# Test with CSV output
+with open(audio_file_path, "rb") as audio_file:
+    files = {"file": (audio_file_path, audio_file, "audio/wav")}
+    response = requests.post(url, files=files, params={"output_format": "csv"})
+
+if response.status_code == 200:
+    print("CSV Response:", response.json())
+else:
+    print("Error:", response.json())
+
+# Test with SRT output
+with open(audio_file_path, "rb") as audio_file:
+    files = {"file": (audio_file_path, audio_file, "audio/wav")}
+    response = requests.post(url, files=files, params={"output_format": "srt"})
+
+if response.status_code == 200:
+    print("SRT Response:", response.json())
+else:
+    print("Error:", response.json())
+
+## OUPUT
+Text Response: {'transcription': 'DIA is an open weights text-to-dialog model.', 'word_timestamps': [{'word': 'DIA', 'start_offset': 70, 'end_offset': 77, 'start': 5.6000000000000005, 'end': 6.16}, {'word': 'is', 'start_offset': 79, 'end_offset': 80, 'start': 6.32, 'end': 6.4}, {'word': 'an', 'start_offset': 80, 'end_offset': 81, 'start': 6.4, 'end': 6.48}, {'word': 'open', 'start_offset': 81, 'end_offset': 82, 'start': 6.48, 'end': 6.5600000000000005}, {'word': 'weights', 'start_offset': 85, 'end_offset': 90, 'start': 6.8, 'end': 7.2}, {'word': 'text-to-dialog', 'start_offset': 90, 'end_offset': 100, 'start': 7.2, 'end': 8.0}, {'word': 'model.', 'start_offset': 102, 'end_offset': 108, 'start': 8.16, 'end': 8.64}]}
+CSV Response: {'transcription': 'DIA is an open weights text-to-dialog model.', 'csv': 'start,end,word\r\n5.6000000000000005,6.16,DIA\r\n6.32,6.4,is\r\n6.4,6.48,an\r\n6.48,6.5600000000000005,open\r\n6.8,7.2,weights\r\n7.2,8.0,text-to-dialog\r\n8.16,8.64,model.\r\n'}
+SRT Response: {'transcription': 'DIA is an open weights text-to-dialog model.', 'srt': '1\n00:00:05,600 --> 00:00:08,640\nDIA is an open weights text-to-dialog model.\n\n'}
+```
+
+
 ## Test workflow
 ```
 RUN: python main.py

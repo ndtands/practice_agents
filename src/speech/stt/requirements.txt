@@ -1,0 +1,6 @@
+Cython
+git+https://github.com/NVIDIA/NeMo.git@main#egg=nemo_toolkit[asr]
+numpy<2.0
+fastapi[standard]
+python-multipart
+cuda-python>=12.3
