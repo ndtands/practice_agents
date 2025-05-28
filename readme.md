@@ -3,6 +3,55 @@
 ## Graph Architecture
 ![Architecture](images/graph.png)
 
+## Test Text to speech
+```
+import requests
+import os
+
+url = "http://localhost:8000/generate_audio/"
+
+# Define the payload
+payload = {
+    "text_input": "[S1] Dia is an open weights text to dialogue model. [S2] Try it now on GitHub or Hugging Face.",
+    "max_new_tokens": 3072,
+    "cfg_scale": 3.0,
+    "temperature": 1.3,
+    "top_p": 0.95,
+    "cfg_filter_top_k": 30,
+    "speed_factor": 0.94
+}
+
+# Optional: Include an audio prompt
+files = {}
+audio_prompt_path = "./example_prompt.mp3"  # Replace with actual path
+if os.path.exists(audio_prompt_path):
+    files["audio_prompt"] = open(audio_prompt_path, "rb")
+
+# Send the request
+response = requests.post(url, data=payload, files=files)
+
+# Save the output audio
+if response.status_code == 200:
+    with open("generated_audio.wav", "wb") as f:
+        f.write(response.content)
+    print("Audio saved as generated_audio.wav")
+else:
+    print(f"Error: {response.status_code}, {response.text}")
+
+# Cleanup
+if "audio_prompt" in files:
+    files["audio_prompt"].close()
+
+
+#Show audio
+from IPython.display import Audio
+
+# Đường dẫn tới file âm thanh
+audio_file = "generated_audio.wav"
+
+# Phát file âm thanh
+Audio(audio_file)
+```
 
 ## Test workflow
 ```
